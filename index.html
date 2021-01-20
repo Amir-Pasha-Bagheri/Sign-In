@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Website</title>
+    <style>
+        body{
+            background-color: rgb(228, 243, 255);
+        }
+        fieldset{
+            width: 500px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 150px;
+            box-shadow: 1px 2px 6px darkgreen;
+            padding-top: 25px;
+            border-radius: 7px;
+            height: 294px;
+            background-color: white;
+        }
+        .span{
+            background-color: rgb(35, 167, 35);
+            border-radius: 5px;
+            padding-left: 7px;
+            padding-right: 6px;
+            padding-bottom: 2px;
+            font-size: x-large;
+        }
+        .input{ 
+            margin-top: 10px;
+            margin-left: 4px;
+            margin-bottom: 37px;
+            width: 332px;
+        }
+        legend{
+            font-size: xx-large;
+        }
+        #submit{
+            background-color: rgb(35, 167, 35);
+            margin-left: 66px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #message{
+            float: left;
+            z-index: 100;
+            margin-left: -222px;
+            background-color: rgb(233, 227, 227);
+            padding-left: 8px;
+            border-radius: 5px;
+        }
+        .invalid::before{
+            color: rgb(141, 39, 39);
+            content: "✖ ";
+        }
+        .valid::before{
+            color: rgb(9, 180, 95);
+            content: "✔ ";
+        }
+        #message .invalid{
+            color: rgb(141, 39, 39);
+        }
+        #message .valid{
+            color: rgb(9, 180, 95);
+        }
+        #checkbox{
+            float: left;
+            margin-top: -28px;
+            z-index: 999;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sign-in">
+        <fieldset>
+            <legend>Sign In</legend>
+            <form>
+                <span class="span">Userame:</span><br/>
+                <input class='input' type="text" id='username' pattern=".{8,}" placeholder="Your Userame Must Contain 8 Characters"
+                title="Your Username Must Contain 8 Characters." required /><br/>
+
+                <span class="span">Password:</span><br/>
+                <input class='input' type="password" id="password" pattern="(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{6,}" placeholder="At least one Lowercase, Uppercase and number"
+                title="Your Password Must Contain at least 8 Characters one Lowercase, one Uppercase and Number." required/>
+                <input id="checkbox" type="checkbox" onclick="check()"/>
+                
+                <div id='message' style="display: none;">
+                    <p id="lowercase" class="invalid">At least One Lowercase.</p>
+                    <p id="uppercase" class="invalid">At least One Uppercase.</p>
+                    <p id="number" class="invalid">At least One Number.</p>
+                    <p id="chars" class="invalid">At least 6 Characters Or More.</p><br/>
+                </div>
+                
+                
+                <input id='submit' class="input" type="submit" value="Sign In"/>
+            </form>
+        </fieldset>
+    </div>
+    <script>
+        document.getElementById('username').onkeyup =  function enterUserName(event){
+            let userName = document.getElementById('username').value
+            const allowed = /[A-Za-z0-9_]/g
+            let sub = userName.substring(0,userName.length-1)
+            if(!allowed.test(event.key))
+            document.getElementById('username').value = sub
+        }
+
+        document.getElementById('password').onkeyup = function enterPassword(event){
+            let password = document.getElementById('password').value
+            const allowed = /[A-Za-z0-9_]/g
+            let sub = password.substring(0, password.length - 1)
+            if(!allowed.test(event.key)){
+                document.getElementById('password').value = sub
+            }
+
+            // Declaring the Message
+            const lower = document.getElementById('lowercase')
+            const upper = document.getElementById('uppercase')
+            const number = document.getElementById('number')
+            const chars = document.getElementById('chars')
+            const length = document.getElementById('password').value.length
+            //lowercase checked
+            if(password.match(/[a-z]/)){
+                lower.classList.remove('invalid')
+                lower.classList.add('valid')
+            }
+            else{
+                lower.classList.remove('valid')
+                lower.classList.add('invalid')
+            }
+            //upper case checked
+            if(password.match(/[A-Z]/)){
+                upper.classList.remove('invalid')
+                upper.classList.add('valid')
+            }
+            else{
+                upper.classList.remove('valid')
+                upper.classList.add('invalid')
+            }
+            //number checked
+            if(password.match(/[0-9]/)){
+                number.classList.remove('invalid')
+                number.classList.add('valid')
+            }
+            else{
+                number.classList.remove('valid')
+                number.classList.add('invalid')
+            }
+            //password length checked
+            if(length >= 6){
+                chars.classList.remove('invalid')
+                chars.classList.add('valid')
+            }
+            else{
+                chars.classList.remove('valid')
+                chars.classList.add('invalid')
+            }
+        }
+
+        document.getElementById('password').onfocus = function showMessage(){
+            document.getElementById('message').style.display = 'block'
+        }
+
+        document.getElementById('password').onblur = function removeMessage(){
+            document.getElementById('message').style.display = 'none'
+        }
+        //show password
+        function check(){
+            const x = document.getElementById('password')
+            if(x.type === 'password') {
+                x.type = 'text'
+            }
+            else {
+                x.type = 'password'
+            }
+        }
+    </script>
+</body>
+</html>
