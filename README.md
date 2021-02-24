@@ -4,7 +4,7 @@ A Sign-In Page wich have these positive points ! :
 
 2- You can enter your password and your password will validate when you press submit button if entered acceptable password
 
-3- You can check Show your password or hide it
+3- You can See your password or hide it
 
 4- You can check your password validation in small box which contains:
 
